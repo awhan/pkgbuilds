@@ -1,3 +1,2 @@
-* should PYTHON_BINDINGS_INSTALL_DIR be specified as well?
 * [cmake python related variables](http://www.cmake.org/cmake/help/v2.8.12/cmake.html#module:FindPythonLibs)
 * RPATH issue
