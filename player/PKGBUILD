@@ -1,4 +1,4 @@
-# Maintainer: 
+# Maintainer:
 pkgname=player
 pkgver=3.0.2
 pkgrel=1
@@ -12,6 +12,7 @@ provides=('player')
 conflicts=('player')
 source=("http://downloads.sourceforge.net/project/playerstage/Player/${pkgver}/${pkgname}-${pkgver}.tar.gz")
 md5sums=('b92b5ea028e6bfc49351849f420167db')
+options=('debug' '!strip')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
@@ -24,8 +25,9 @@ build() {
     cd "$srcdir/$pkgname-$pkgver"
     cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_SKIP_BUILD_RPATH=TRUE \
         -DPLAYERCC_EXTRA_LINK_LIBRARIES=boost_system \
-        -DPYTHON_EXECUTABLE=/usr/bin/python2
-    make 
+        -DPYTHON_EXECUTABLE=/usr/bin/python2 \
+        -DCMAKE_BUILD_TYPE=Debug
+    make
 }
 
 package() {
