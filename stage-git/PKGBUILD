@@ -1,0 +1,40 @@
+# Maintainer: 
+pkgname=stage-git
+pkgver=v4.1.1.26.gf9c59ca
+pkgrel=1
+pkgdesc="2D multiple-robot simulator"
+arch=('i686')
+url="http://playerstage.sourceforge.net/"
+license=('GPL')
+groups=()
+depends=('player' 'fltk')
+makedepends=('git' 'cmake')
+provides=('stage')
+conflicts=('stage')
+replaces=()
+backup=()
+options=(debug !strip)
+install=
+source=('stage::git://github.com/rtv/Stage.git')
+noextract=()
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/stage"
+    local ver="$(git describe --long)"
+    printf "%s" "${ver//-/.}"
+}
+
+build() {
+    cd "$srcdir/stage"
+    cmake -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=Debug 
+    make
+}
+
+package() {
+    cd "$srcdir/stage"
+    make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:

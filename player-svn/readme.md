@@ -1,1 +1,1 @@
-# should PYTHON_BINDINGS_INSTALL_DIR be specified as well?
+* should PYTHON_BINDINGS_INSTALL_DIR be specified as well?
