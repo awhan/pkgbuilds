@@ -1,0 +1,7 @@
+# -*- mode:Shell-script -*-
+
+#git clone git://github.com/rtv/Stage.git || exit 1
+mkdir build || exit 1
+cd build || exit 1
+cmake -DCMAKE_INSTALL_PREFIX=/usr ../Stage || exit 1
+make || exit 1

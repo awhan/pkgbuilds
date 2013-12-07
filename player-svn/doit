@@ -1,0 +1,8 @@
+# -*- mode:Shell-script -*-
+
+svn co svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk || exit 1
+mkdir build || exit 1
+cd build || exit 1
+cmake -DCMAKE_INSTALL_PREFIX=/usr  \
+    -DPYTHON_EXECUTABLE=/usr/bin/python2 ../trunk || exit 1
+make || exit 1
