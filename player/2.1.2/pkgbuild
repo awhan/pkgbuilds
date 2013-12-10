@@ -1,0 +1,34 @@
+# Maintainer: awhan patnaik
+pkgname=player
+pkgver=2.1.2
+pkgrel=1
+pkgdesc="Cross-platform robot device interface & server"
+arch=('i686')
+url="http://playerstage.sourceforge.net"
+license=('GPL')
+depends=('boost' 'boost-libs' 'gsl' 'python2')
+makedepends=('cmake')
+provides=('player')
+conflicts=('player')
+source=("http://downloads.sourceforge.net/project/playerstage/Player/${pkgver}/${pkgname}-${pkgver}.tar.bz2" 
+    'fixit')
+md5sums=('324cb05252c916d4ce6106d6c83b6131'
+         'b23ffb1d869a7df5157a6b6d2fdf704e')
+options=()
+
+prepare() {
+    cd "$srcdir/$pkgname-$pkgver"
+    ../fixit "$pkgname-$pkgver"
+}
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver"
+    autoreconf -i
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    make DESTDIR="$pkgdir/" install
+}

@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+
+if [[ 1 -ne $# ]]; then
+    echo "error..."
+fi
+
+
+cd "$1"
+
+
+file="server/drivers/mixed/mricp/src/Timer.cpp"
+echo $file
+ed -v "$file"<<EOF
+H
+2
+i
+#include <unistd.h> // usleep(3)
+.
+w
+q
+EOF
+echo
+
+
+file="server/drivers/shell/readlog.cc"
+echo $file
+ed -v "$file" <<EOF
+H
+687s/file/gzfile
+641s/file/gzfile
+w
+q
+EOF
+echo
+
+
+file="libplayerxdr/Makefile.am"
+echo $file
+ed -v "$file" <<EOF
+H
+,s/python/python2/
+w
+q
+EOF
+echo
+
+
+file="client_libs/libplayerc++/playerclient.cc"
+echo $file
+ed -v "$file" <<EOF
+H
+166p
+s/UTC/UTC_
+w
+q
+EOF
+echo
+
+
+file="libplayercore/Makefile.am"
+echo $file
+ed -v "$file" <<EOF
+H
+,s/python/python2
+w
+q
+EOF
+echo
+
+
+file="server/drivers/blackboard/localbb/Makefile.am"
+echo $file
+ed -v "$file" <<EOF
+H
+,s/dnl/#
+w
+q
+EOF
+echo
+
+
+file="configure.ac"
+echo $file
+ed -v "$file" <<EOF
+H
+325p
+s/LIB"/LIB -lboost_system"
+w
+q
+EOF

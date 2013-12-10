@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# -*- mode:Shell-script -*-
+
+rm -fr player-2.1.2
+
+tar xjf player-2.1.2.tar.bz2
+
+./make_changes_for_patch_generation player-2.1.2
+
+autoreconf -i
+./configure --prefix=/usr
+make
+
+
+
