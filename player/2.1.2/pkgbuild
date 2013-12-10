@@ -6,14 +6,13 @@ pkgdesc="Cross-platform robot device interface & server"
 arch=('i686')
 url="http://playerstage.sourceforge.net"
 license=('GPL')
-depends=('boost' 'boost-libs' 'gsl' 'python2')
+#depends=('libgnomecanvas' 'libtool' 'libusb-compat' 'boost-libs' 'gsl' 'opencv' 'python2')
+depends=('boost-libs' 'gsl' 'opencv' 'python2')
 makedepends=('cmake')
 provides=('player')
 conflicts=('player')
-source=("http://downloads.sourceforge.net/project/playerstage/Player/${pkgver}/${pkgname}-${pkgver}.tar.bz2" 
+source=("http://downloads.sourceforge.net/project/playerstage/Player/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
     'fixit')
-md5sums=('324cb05252c916d4ce6106d6c83b6131'
-         'b23ffb1d869a7df5157a6b6d2fdf704e')
 options=()
 
 prepare() {
@@ -32,3 +31,6 @@ package() {
     cd "$srcdir/$pkgname-$pkgver"
     make DESTDIR="$pkgdir/" install
 }
+
+md5sums=('324cb05252c916d4ce6106d6c83b6131'
+         'e16fae3c0eb215a1d2f64ccc623082ff')

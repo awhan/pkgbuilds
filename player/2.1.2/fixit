@@ -17,8 +17,7 @@ H
 i
 #include <unistd.h> // usleep(3)
 .
-w
-q
+wq
 EOF
 echo
 
@@ -29,8 +28,7 @@ ed -v "$file" <<EOF
 H
 687s/file/gzfile
 641s/file/gzfile
-w
-q
+wq
 EOF
 echo
 
@@ -40,8 +38,7 @@ echo $file
 ed -v "$file" <<EOF
 H
 ,s/python/python2/
-w
-q
+wq
 EOF
 echo
 
@@ -52,8 +49,7 @@ ed -v "$file" <<EOF
 H
 166p
 s/UTC/UTC_
-w
-q
+wq
 EOF
 echo
 
@@ -63,8 +59,7 @@ echo $file
 ed -v "$file" <<EOF
 H
 ,s/python/python2
-w
-q
+wq
 EOF
 echo
 
@@ -74,10 +69,22 @@ echo $file
 ed -v "$file" <<EOF
 H
 ,s/dnl/#
-w
-q
+wq
 EOF
 echo
+
+
+file="utils/pmap/Makefile.am"
+echo $file
+ed -v "$file" <<EOF
+H
+24p
+c
+pmaptest_LDADD = -lpmap -llodo @GSL_LIBS@
+.
+p
+wq
+EOF
 
 
 file="configure.ac"
@@ -86,6 +93,5 @@ ed -v "$file" <<EOF
 H
 325p
 s/LIB"/LIB -lboost_system"
-w
-q
+wq
 EOF

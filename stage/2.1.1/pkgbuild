@@ -1,0 +1,32 @@
+# Maintainer: awhan patnaik
+pkgname=stage
+pkgver=2.1.1
+pkgrel=1
+pkgdesc="2D multiple-robot simulator"
+arch=('i686')
+url="http://playerstage.sourceforge.net/"
+license=('GPL')
+groups=()
+depends=('player' 'fltk')
+makedepends=()
+provides=('stage')
+conflicts=('stage')
+replaces=()
+backup=()
+options=()
+install=
+source=("http://sourceforge.net/projects/playerstage/files/Stage/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
+noextract=()
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  ./configure --prefix=/usr 
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  make DESTDIR="$pkgdir/" install
+}
+
+md5sums=('bae4c8fc7866bce4dacc3f673921f269')

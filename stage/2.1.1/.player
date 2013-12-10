@@ -1,0 +1,3 @@
+plugins.cc:197 loading plugin libstageplugin
+plugins.cc:231 invoking player_driver_init()...
+plugins.cc:247 success
