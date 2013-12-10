@@ -1,3 +1,4 @@
+# -*- mode:Shell-script -*-
 # Maintainer: awhan patnaik
 pkgname=stage
 pkgver=2.1.1
@@ -15,7 +16,8 @@ replaces=()
 backup=()
 options=()
 install=
-source=("http://sourceforge.net/projects/playerstage/files/Stage/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
+source=("http://sourceforge.net/projects/playerstage/files/Stage/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
+'rgb.txt')
 noextract=()
 
 build() {
@@ -29,4 +31,5 @@ package() {
   make DESTDIR="$pkgdir/" install
 }
 
-md5sums=('bae4c8fc7866bce4dacc3f673921f269')
+md5sums=('bae4c8fc7866bce4dacc3f673921f269'
+         '09ee098b83d94c7c046d6b55ebe84ae1')

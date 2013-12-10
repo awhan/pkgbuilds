@@ -1,0 +1,53 @@
+#!/bin/bash 
+#The script is tested in Ubuntu (version 7.04 - Feisty Fawn)
+
+#Update ubuntu installation
+sudo apt-get update
+sudo apt-get upgrade
+
+# Just copy the rgb file
+cd ~/PlayerStageInstall
+cp rgb.txt /usr/share/X11/rgb.txt
+
+
+#Install the necessary dependencies
+sudo apt-get install autotools-dev build-essential cpp libboost-dev libboost-thread-dev libboost-thread1.34.1 libboost-signals-dev libboost-signals1.34.1 libltdl3 libltdl3-dev libgnomecanvas2-0 libgsl0ldbl libgsl0-dev libgtk2.0-dev libjpeg62-dev libtool swig
+sudo apt-get install libtool libltdl7
+
+tar xjvf player-2.1.2.tar.bz2
+tar xjvf stage-2.1.1.tar.bz2
+
+#Configure and install player and stage in the $user/playerstage directory
+cd player-2.1.2
+ ./configure --prefix=/home/$USER/playerstage
+
+ make
+ make install
+
+cd ..
+cd stage-2.1.1
+
+./configure --prefix=/home/$USER/playerstage
+make 
+make install
+
+#Setting the path be appending to .bashrc
+echo "" >> ~/.bashrc 
+echo "export PATH=\"\$PATH:/home/$USER/playerstage/bin\"" >> ~/.bashrc 
+echo "export PLAYERPATH=\"\$PATH:/home/$USER/playerstage/share/stage/worlds\"" >> ~/.bashrc
+source ~/.bashrc
+
+echo "Done installing player and stage"
+
+
+#To test the installation the following can be used:
+#
+#Start stage
+#player ~/playerstage/share/stage/worlds/simple.cfg 
+#Start a simulation
+#~/playerstage/share/player/examples/libplayerc++/./laserobstacleavoid
+#
+
+#Here is an other test
+#stest playerstage/share/stage/worlds/simple.world robot1
+
