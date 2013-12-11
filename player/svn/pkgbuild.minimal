@@ -1,0 +1,48 @@
+# -*- mode:Shell-script -*-
+# Maintainer: awhan patnaik
+pkgname=player-svn
+pkgver=9136
+pkgrel=1
+pkgdesc="Cross-platform robot device interface & server"
+arch=('i686')
+url="http://playerstage.sourceforge.net/"
+license=('GPL')
+depends=('opencv' 'gsl' 'boost-libs' 'libgnomecanvas' 'libjpeg-turbo' 'swig')
+makedepends=('subversion' 'cmake' 'python2')
+provides=('player')
+conflicts=('player')
+options=()
+source=('svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk')
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/trunk"
+    local ver="$(svnversion)"
+    printf "%s" "${ver//[[:alpha:]]}"
+}
+
+build() {
+    cd "$srcdir/trunk"
+    # cmake -DCMAKE_INSTALL_PREFIX=/usr \
+    #     -DPYTHON_EXECUTABLE=/usr/bin/python2 \
+    #     -DBUILD_RUBY_BINDINGS=OFF \
+    #     -DBUILD_RUBY_CPP_BINDINGS=OFF \
+    #     -DBUILD_PYTHONC_BINDINGS=OFF \
+    #     -DBUILD_PYTHONCPP_BINDINGS=OFF \
+    #     -DBUILD_EXAMPLES=ON
+
+    cmake -DCMAKE_INSTALL_PREFIX=/usr \
+	-DPYTHON_EXECUTABLE=/usr/bin/python2 \
+        -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
+	-DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
+	-DBUILD_PYTHONCPP_BINDINGS=ON \
+	-DBUILD_EXAMPLES=ON
+    #make
+}
+
+package() {
+    cd "$srcdir/trunk"
+    #make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:

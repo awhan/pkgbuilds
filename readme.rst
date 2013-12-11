@@ -3,6 +3,7 @@ pkgbuilds
 
 my PKGBUILDs for archlinux
 
+
 #. check package with https://wiki.archlinux.org/index.php/Namcap
 
 
@@ -13,3 +14,6 @@ my PKGBUILDs for archlinux
 
 
 #. https://wiki.archlinux.org/index.php/DeveloperWiki:Building_in_a_Clean_Chroot
+
+
+#. https://wiki.archlinux.org/index.php/Patching_in_ABS

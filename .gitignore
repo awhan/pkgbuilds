@@ -5,4 +5,5 @@
 *.part
 src/
 pkg/
+trunk/
 .player

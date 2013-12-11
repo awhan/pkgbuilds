@@ -1,42 +1,53 @@
-# Maintainer: 
+# -*- mode:Shell-script -*-
+# Maintainer: awhan patnaik
 pkgname=player-svn
-pkgver=9127
+pkgver=9136
 pkgrel=1
 pkgdesc="Cross-platform robot device interface & server"
 arch=('i686')
 url="http://playerstage.sourceforge.net/"
 license=('GPL')
-depends=('python2' 'libltdl' 'gsl' 'ruby' 'libusb-compat' 'boost-libs' \
-    'opencv' 'libgnomecanvas')
-makedepends=('subversion' 'cmake' 'base-devel')
+depends=('freeglut' 'libltdl' 'ruby' 'python2' 'opencv' 'gsl' 'boost-libs' 'libgnomecanvas')
+makedepends=('subversion' 'cmake' 'python2')
 provides=('player')
 conflicts=('player')
-options=(debug !strip)
-source=('player::svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk')
+options=()
+source=('svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk')
 md5sums=('SKIP')
 
 pkgver() {
-    cd "$srcdir/player"
+    cd "$srcdir/trunk"
     local ver="$(svnversion)"
     printf "%s" "${ver//[[:alpha:]]}"
 }
 
 build() {
-    # https://bugs.archlinux.org/task/14023
+    # insecure RPATH related https://bugs.archlinux.org/task/14023
 
-    cd "$srcdir/player"
+    cd "$srcdir/trunk"
     cmake -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_SKIP_RPATH=ON \
+	-DCMAKE_SKIP_RPATH=ON \
+	-DBUILD_EXAMPLES=ON \
+	-DBUILD_PYTHONCPP_BINDINGS=ON \
         -DPYTHON_EXECUTABLE=/usr/bin/python2 \
-        -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
-        -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
-        -DPLAYERCC_EXTRA_LINK_LIBRARIES=boost_system \
-        -DCMAKE_BUILD_TYPE=Debug
-    make
+	-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
+	-DPYTHON_LIBRARY=/usr/lib/libpython2.7.so
+    
+    # if ! grep -q "BUILD_EXAMPLES:BOOL=ON" CMakeCache.txt; then
+    # 	echo "examples will not be built"
+    # 	exit 1
+    # fi
+
+    grep "BUILD_EXAMPLES" CMakeCache.txt
+    grep "BUILD_PYTHONCPP_BINDINGS" CMakeCache.txt
+    grep "PYTHON_LIBRARY" CMakeCache.txt
+    grep "PYTHON_INCLUDE_DIR" CMakeCache.txt
+    #sleep 10
+    #make
 }
 
 package() {
-    cd "$srcdir/player"
+    cd "$srcdir/trunk"
     make DESTDIR="$pkgdir/" install
 }
 

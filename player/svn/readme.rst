@@ -1,3 +1,6 @@
+#. http://playerstage.sourceforge.net/doc/Player-cvs/player/install.html
+
+
 #. pkgbuild.simple 
    
    this was built on an almost new system with no libgnomecanvas or gsl or ruby or

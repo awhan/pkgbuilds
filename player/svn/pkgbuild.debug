@@ -1,16 +1,18 @@
+# -*- mode:Shell-script -*-
 # Maintainer: awhan patnaik
 pkgname=player-svn
-pkgver=9136 
+pkgver=9127
 pkgrel=1
 pkgdesc="Cross-platform robot device interface & server"
 arch=('i686')
 url="http://playerstage.sourceforge.net/"
 license=('GPL')
-depends=('python2')
-makedepends=('subversion' 'cmake')
+depends=('python2' 'libltdl' 'gsl' 'ruby' 'libusb-compat' 'boost-libs' \
+    'opencv' 'libgnomecanvas')
+makedepends=('subversion' 'cmake' 'base-devel')
 provides=('player')
 conflicts=('player')
-options=()
+options=(debug !strip)
 source=('player::svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk')
 md5sums=('SKIP')
 
@@ -22,10 +24,16 @@ pkgver() {
 
 build() {
     # https://bugs.archlinux.org/task/14023
+
     cd "$srcdir/player"
     cmake -DCMAKE_INSTALL_PREFIX=/usr \
-    -DPYTHON_EXECUTABLE=/usr/bin/python2
-    make 
+        -DCMAKE_SKIP_RPATH=ON \
+        -DPYTHON_EXECUTABLE=/usr/bin/python2 \
+        -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
+        -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
+        -DPLAYERCC_EXTRA_LINK_LIBRARIES=boost_system \
+        -DCMAKE_BUILD_TYPE=Debug
+    make
 }
 
 package() {
@@ -34,4 +42,3 @@ package() {
 }
 
 # vim:set ts=2 sw=2 et:
-

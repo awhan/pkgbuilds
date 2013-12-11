@@ -1,8 +1,25 @@
 # -*- mode:Shell-script -*-
 
-svn co svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk || exit 1
+#svn co svn://svn.code.sf.net/p/playerstage/svn/code/player/trunk || exit 1
+
+rm -fr build || exit 1
 mkdir build || exit 1
 cd build || exit 1
-cmake -DCMAKE_INSTALL_PREFIX=/usr  \
-    -DPYTHON_EXECUTABLE=/usr/bin/python2 ../trunk || exit 1
+# cmake -DCMAKE_INSTALL_PREFIX=/usr  \
+#     -DPYTHON_EXECUTABLE=/usr/bin/python2 ../trunk || exit 1
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_EXAMPLES=ON \
+    -DPYTHON_EXECUTABLE=/usr/bin/python2 \
+    -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
+    -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
+    -L ../trunk
+
+# if ! grep -q "BUILD_EXAMPLES:BOOL=ON" CMakeCache.txt; then
+#     echo "examples will not be built"
+#     exit 1
+# fi
+
+#grep "BUILD_EXAMPLES:BOOL=" CMakeCache.txt
+
 make || exit 1
