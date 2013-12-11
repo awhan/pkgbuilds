@@ -16,24 +16,24 @@ replaces=()
 backup=()
 options=()
 install=
-source=('stage::git://github.com/rtv/Stage.git')
+source=('repo::git://github.com/rtv/Stage.git')
 noextract=()
 md5sums=('SKIP')
 
 pkgver() {
-    cd "$srcdir/stage"
+    cd "$srcdir/repo"
     local ver="$(git describe --long)"
     printf "%s" "${ver//-/.}"
 }
 
 build() {
-    cd "$srcdir/stage"
+    cd "$srcdir/repo"
     cmake -DCMAKE_INSTALL_PREFIX=/usr 
     make
 }
 
 package() {
-    cd "$srcdir/stage"
+    cd "$srcdir/repo"
     make DESTDIR="$pkgdir/" install
 }
 
