@@ -7,7 +7,7 @@ pkgdesc="Cross-platform robot device interface & server"
 arch=('i686')
 url="http://playerstage.sourceforge.net/"
 license=('GPL')
-depends=('freeglut' 'libltdl' 'ruby' 'python2' 'opencv' 'gsl' 'boost-libs' 'libgnomecanvas')
+depends=('libusb-compat' 'freeglut' 'libltdl' 'ruby' 'python2' 'opencv' 'gsl' 'boost-libs' 'libgnomecanvas')
 makedepends=('subversion' 'cmake' 'python2')
 provides=('player')
 conflicts=('player')
@@ -19,6 +19,14 @@ pkgver() {
     cd "$srcdir/trunk"
     local ver="$(svnversion)"
     printf "%s" "${ver//[[:alpha:]]}"
+}
+
+
+prepare() {
+    cd "$srcdir/trunk"
+    while IFS=: read -r file line ignored; do
+        ed "$file" <<< "$line"$'s/python/python2\nw\nq'
+    done < <(grep -rn --exclude-dir='.svn' '#!/usr/bin/env python')
 }
 
 build() {
