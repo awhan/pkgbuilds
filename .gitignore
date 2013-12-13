@@ -3,7 +3,9 @@
 *.bz2
 *.gz
 *.part
+*.log
+.player
 src/
 pkg/
 trunk/
-.player
+repo/

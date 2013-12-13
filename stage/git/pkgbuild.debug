@@ -1,5 +1,6 @@
-# Maintainer: 
-pkgname=stage-git
+# -*- mode:Shell-script -*-
+# Maintainer: awhan patnaik
+pkgname=stage-git-dbg
 pkgver=v4.1.1.26.gf9c59ca
 pkgrel=1
 pkgdesc="2D multiple-robot simulator"
@@ -15,7 +16,7 @@ replaces=()
 backup=()
 options=(debug !strip)
 install=
-source=('stage::git://github.com/rtv/Stage.git')
+source=('repo::git://github.com/rtv/Stage.git')
 noextract=()
 md5sums=('SKIP')
 
@@ -26,14 +27,14 @@ pkgver() {
 }
 
 build() {
-    cd "$srcdir/stage"
+    cd "$srcdir/repo"
     cmake -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Debug 
     make
 }
 
 package() {
-    cd "$srcdir/stage"
+    cd "$srcdir/repo"
     make DESTDIR="$pkgdir/" install
 }
 

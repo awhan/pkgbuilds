@@ -1,6 +1,9 @@
 default:
 	makepkg -p pkgbuild
 
+debug:
+	makepkg -p pkgbuild.debug
+
 clean:
 	rm -fr src pkg *~
 

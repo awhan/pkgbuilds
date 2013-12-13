@@ -2,3 +2,6 @@
 
 
 #. RPATH issue
+
+
+#. http://playerstage.sourceforge.net/wiki/Debugging_with_GDB

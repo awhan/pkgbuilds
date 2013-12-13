@@ -8,7 +8,7 @@ arch=('i686')
 url="http://playerstage.sourceforge.net/"
 license=('GPL')
 groups=()
-depends=('player' 'fltk')
+depends=('player')
 makedepends=()
 provides=('stage')
 conflicts=('stage')
@@ -22,6 +22,12 @@ noextract=()
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
+
+  if [[ ! -f "/usr/share/X11/rgb.txt" ]]; then
+      echo "/usr/share/X11/rgb.txt is missing ..."
+      exit 1
+  fi
+
   ./configure --prefix=/usr 
   make
 }
@@ -32,4 +38,4 @@ package() {
 }
 
 md5sums=('bae4c8fc7866bce4dacc3f673921f269'
-         '09ee098b83d94c7c046d6b55ebe84ae1')
+         '4896b3e3380a6a2af1920709bc31b140')

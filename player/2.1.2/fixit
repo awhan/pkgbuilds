@@ -3,10 +3,11 @@
 
 if [[ 1 -ne $# ]]; then
     echo "error..."
+    exit 1
 fi
 
 
-cd "$1"
+cd "$1" || exit 1
 
 
 file="server/drivers/mixed/mricp/src/Timer.cpp"
@@ -28,16 +29,6 @@ ed -v "$file" <<EOF
 H
 687s/file/gzfile
 641s/file/gzfile
-wq
-EOF
-echo
-
-
-file="libplayerxdr/Makefile.am"
-echo $file
-ed -v "$file" <<EOF
-H
-,s/python/python2/
 wq
 EOF
 echo

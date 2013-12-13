@@ -1,3 +1,4 @@
+# -*- mode:Shell-script -*-
 # Maintainer: awhan patnaik
 pkgname=player
 pkgver=2.1.2
@@ -7,7 +8,7 @@ arch=('i686')
 url="http://playerstage.sourceforge.net"
 license=('GPL')
 #depends=('libgnomecanvas' 'libtool' 'libusb-compat' 'boost-libs' 'gsl' 'opencv' 'python2')
-depends=('boost-libs' 'gsl' 'opencv' 'python2')
+depends=('freeglut' 'libusb-compat' 'libgnomecanvas' 'libltdl' 'boost-libs' 'gsl' 'opencv' 'python2')
 makedepends=('cmake')
 provides=('player')
 conflicts=('player')
@@ -17,13 +18,23 @@ options=()
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
-    ../fixit "$pkgname-$pkgver"
+    
+    ../fixit .
+
+    while IFS=: read -r file line _; do
+        ed "$file" <<< "$line"$'s/python/python2\nw\nq'
+        #echo "$line"
+    done < <(grep -Ern --include=Makefile.am "	python ")
+
+    while read -r file; do
+        ed "$file" <<< $'1s/python/python2\nw\nq'
+    done < <(grep -rl '#!/usr/bin/env python')
 }
 
 build() {
     cd "$srcdir/$pkgname-$pkgver"
     autoreconf -i
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --disable-rpath
     make
 }
 
@@ -32,5 +43,6 @@ package() {
     make DESTDIR="$pkgdir/" install
 }
 
+
 md5sums=('324cb05252c916d4ce6106d6c83b6131'
-         'e16fae3c0eb215a1d2f64ccc623082ff')
+         'd38c94ea7c456c57ea1dbfe63076ebe1')

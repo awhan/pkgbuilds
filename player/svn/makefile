@@ -1,11 +1,14 @@
 default:
-	makepkg -p pkgbuild
+	makepkg -L -p pkgbuild
 
-minimal:
-	makepkg -p pkgbuild.minimal
+nobuild:
+	makepkg -L -o -p pkgbuild
+
+debug:
+	makepkg -L -p pkgbuild.debug
 
 clean:
 	rm -fr build pkg src *~
 
 distclean:
-	rm -fr build pkg src *~ *.pkg.tar.xz trunk
+	rm -fr build pkg src repo *~ *.pkg.tar.xz
