@@ -4,6 +4,7 @@
 *.gz
 *.part
 *.log
+*.log.?
 .player
 src/
 pkg/

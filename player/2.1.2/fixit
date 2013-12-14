@@ -14,10 +14,11 @@ file="server/drivers/mixed/mricp/src/Timer.cpp"
 echo $file
 ed -v "$file"<<EOF
 H
-2
+2p
 i
 #include <unistd.h> // usleep(3)
 .
+p
 wq
 EOF
 echo
